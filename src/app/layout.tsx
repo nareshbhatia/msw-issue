@@ -1,3 +1,4 @@
+import { AppProvider } from '@/providers';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -14,9 +15,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const baseApiUrl = process.env.BASE_API_URL ?? '';
+  const useMockData = process.env.USE_MOCK_DATA === 'true';
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AppProvider baseApiUrl={baseApiUrl} useMockData={useMockData}>
+          {children}
+        </AppProvider>
+      </body>
     </html>
   );
 }
